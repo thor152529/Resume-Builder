@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Resume Builder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    body { font-family: 'Roboto', sans-serif; background:#f4f6f8; margin:0; }
+    header { background:#1e293b; color:#fff; padding:15px; text-align:center; }
+    .container { display:flex; gap:20px; padding:20px; }
+    .form-box { width:45%; background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+    .preview-box { width:55%; background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+    h2 { margin-top:0; color:#1e293b; }
+    label { font-weight:500; margin-top:10px; display:block; }
+    input, textarea { width:100%; padding:8px; margin-top:5px; border:1px solid #ccc; border-radius:4px; }
+    textarea { resize:vertical; }
+    button { margin-top:15px; padding:10px 15px; background:#2563eb; color:#fff; border:none; border-radius:4px; cursor:pointer; }
+    button:hover { background:#1d4ed8; }
+    /* Resume Template */
+    .resume { padding:20px; }
+    .name { font-size:26px; font-weight:700; }
+    .section { margin-top:15px; }
+    .section h3 { border-bottom:2px solid #2563eb; color:#2563eb; margin-bottom:5px; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Resume Builder Website</h1>
+  <p>Mini Project – AKTU | ATS Friendly Resume Generator</p>
+</header>
+
+<div class="container">
+  <!-- Input Form -->
+  <div class="form-box">
+    <h2>Enter Details</h2>
+    <label>Full Name</label>
+    <input id="name" oninput="updateResume()" />
+
+    <label>Email</label>
+    <input id="email" oninput="updateResume()" />
+
+    <label>Phone</label>
+    <input id="phone" oninput="updateResume()" />
+
+    <label>Career Objective</label>
+    <textarea id="objective" oninput="updateResume()"></textarea>
+
+    <label>Education</label>
+    <textarea id="education" oninput="updateResume()"></textarea>
+
+    <label>Skills</label>
+    <textarea id="skills" oninput="updateResume()"></textarea>
+
+    <label>Projects / Experience</label>
+    <textarea id="experience" oninput="updateResume()"></textarea>
+
+    <button onclick="downloadPDF()">Download Resume (PDF)</button>
+  </div>
+
+  <!-- Resume Preview -->
+  <div class="preview-box">
+    <h2>Live Preview</h2>
+    <div id="resume" class="resume">
+      <div class="name" id="r_name">Your Name</div>
+      <div id="r_contact">Email | Phone</div>
+
+      <div class="section">
+        <h3>Objective</h3>
+        <p id="r_objective"></p>
+      </div>
+
+      <div class="section">
+        <h3>Education</h3>
+        <p id="r_education"></p>
+      </div>
+
+      <div class="section">
+        <h3>Skills</h3>
+        <p id="r_skills"></p>
+      </div>
+
+      <div class="section">
+        <h3>Experience / Projects</h3>
+        <p id="r_experience"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function updateResume() {
+    r_name.innerText = name.value || 'Your Name';
+    r_contact.innerText = `${email.value || 'Email'} | ${phone.value || 'Phone'}`;
+    r_objective.innerText = objective.value;
+    r_education.innerText = education.value;
+    r_skills.innerText = skills.value;
+    r_experience.innerText = experience.value;
+  }
+
+  function downloadPDF() {
+    const element = document.getElementById('resume');
+    html2pdf().from(element).save('Resume.pdf');
+  }
+</script>
+</body>
+</html>
